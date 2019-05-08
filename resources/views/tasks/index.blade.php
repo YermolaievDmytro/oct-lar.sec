@@ -5,7 +5,7 @@
     <!-- Отображение ошибок проверки ввода -->
     @include('common.errors')
     <!-- Форма новой задачи -->
-    <form action="{{ url('task') }}" method="POST" class="form-horizontal">
+    <form action="{{ url('tasks') }}" method="POST" class="form-horizontal">
 	{{ csrf_field() }}
 	<!-- Имя задачи -->
 	<div class="form-group">
@@ -24,5 +24,44 @@
 	</div>
     </form>
 </div>
-<!-- TODO: Текущие задачи -->
+@if (count($tasks) > 0)
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Текущая задача
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped task-table">
+	    <!-- Заголовок таблицы -->
+	    <thead>
+		<tr>
+		    <th>Задача</th>
+		    <th>Действие</th>
+		</tr>
+	    </thead>
+	    <!-- Тело таблицы -->
+	    <tbody>
+		@foreach ($tasks as $task)
+		<tr>
+		    <!-- Имя задачи -->
+		    <td class="table-text">
+			<div>{{ $task->name }}</div>
+		    </td>
+
+		    <td>
+			<form action="{{url('tasks/'.$task->id)}}" method="POST">
+			    {{csrf_field()}}
+			    {{method_field('delete')}}
+			    <input type="hidden" name='id' value=""/>
+			    <button type="submit" class="btn btn-default bg-danger">
+				<i class="fa fa-trash"></i> Удалить
+			    </button>
+			</form>
+		    </td>
+		</tr>
+		@endforeach
+	    </tbody>
+        </table>
+    </div>
+</div>
+@endif
 @endsection

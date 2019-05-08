@@ -4,10 +4,13 @@ use Illuminate\Http\Request;
 use App\Task;
 
 Route::get('/', function () {
-    return view('tasks.index'); // в уроке это вид tasks
+    $tasks = Task::all();
+    return view('tasks.index', [
+	'tasks' => $tasks, //значение переменной tasks спроєцируется в переменную tasks внутри view
+    ]); // в уроке это вид tasks
 });
 
-Route::post('/task', function(Request $request) {
+Route::post('/tasks', function(Request $request) {
 
     $validator = Validator::make($request->all(), [
 		'name' => 'required|max:255',
@@ -20,5 +23,10 @@ Route::post('/task', function(Request $request) {
     $task = new Task();
     $task->name = $request->name;
     $task->save();
+    return redirect('/');
+});
+
+Route::delete('/tasks/{task}', function(Task $task){
+    $task->delete();
     return redirect('/');
 });

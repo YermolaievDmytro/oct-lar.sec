@@ -32,8 +32,8 @@ Route::delete('/tasks/{task}', function(Request $request, Task $task) {
 });
 
 Route::get('/tasks/{task}/edit', function(Task $task) {
-    $task = Task::find();
-    return view('tasks.edit', [
-	'task' => $task,
-    ]);
+    var_dump($task);
+   // return view('tasks.edit', [
+//	'task' => $task,
+   // ]);
 });

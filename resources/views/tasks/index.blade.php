@@ -56,6 +56,13 @@
 				<i class="fa fa-trash"></i> Удалить
 			    </button>
 			</form>
+			<form action="{{url('tasks/'.$task->id.'/edit')}}" method="GET>"
+			    {{csrf_field()}}
+			    <input type="hidden" name='id' value=""/>
+			    <button type="submit" class="btn btn-default bg-danger">
+				Редактировать
+			    </button>
+			</form>
 		    </td>
 		</tr>
 		@endforeach

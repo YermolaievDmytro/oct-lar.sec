@@ -4,12 +4,11 @@
 <div class="panel-body">
     <!-- Отображение ошибок проверки ввода -->
     @include('common.errors')
-    <!-- Форма новой задачи -->
-    <form action="{{ route('tasks_store') }}" method="POST" class="form-horizontal">
+    <form action="{{ route('news_store') }}" method="POST" class="form-horizontal">
 	{{ csrf_field() }}
 	<!-- Имя задачи -->
 	<div class="form-group">
-	    <label for="task" class="col-sm-3 control-label">Задача</label>
+	    <label for="task" class="col-sm-3 control-label">Новость</label>
 	    <div class="col-sm-6">
 		<input type="text" name="name" id="task-name" class="form-control">
 	    </div>
@@ -18,37 +17,36 @@
 	<div class="form-group">
 	    <div class="col-sm-offset-3 col-sm-6">
 		<button type="submit" class="btn btn-default bg-success">
-		    <i class="fa fa-plus"></i> Добавить задачу
+		    <i class="fa fa-plus"></i> Добавить новость
 		</button>
 	    </div>
 	</div>
     </form>
+
 </div>
-@if (count($tasks) > 0)
+@if (count($all_news) > 0)
 <div class="panel panel-default">
-    <div class="panel-heading">
-        Текущая задача
-    </div>
     <div class="panel-body">
         <table class="table table-striped task-table">
+	    @include('news.create');
 	    <!-- Заголовок таблицы -->
 	    <thead>
 		<tr>
-		    <th>Задача</th>
+		    <th>Новости</th>
 		    <th colspan="2">Действие</th>
 		</tr>
 	    </thead>
 	    <!-- Тело таблицы -->
 	    <tbody>
-		@foreach ($tasks as $task)
+		@foreach ($all_news as $news)
 		<tr>
 		    <!-- Имя задачи -->
 		    <td class="table-text">
-			<div>{{ $task->name }}</div>
+			<div>{{ $news->name }}</div>
 		    </td>
 
 		    <td>
-			<form action="{{route('tasks_destroy',$task->id)}}" method="POST">
+			<form action="{{route('news_destroy',$news->id)}}" method="POST">
 			    {{csrf_field()}}
 			    {{method_field('delete')}}
 			    <input type="hidden" name='id' value=""/>
@@ -58,10 +56,10 @@
 			</form>
 		    </td>
 		    <td>
-			<form action="{{route('tasks_edit',$task->id)}}" method="post">
-			      {{method_field('get')}}
-			      {{csrf_field()}}
-			      <input type="hidden" name='id' value=""/>
+			<form action="{{route('news_edit',$news->id)}}" method="post">
+			    {{method_field('get')}}
+			    {{csrf_field()}}
+			    <input type="hidden" name='id' value=""/>
 			    <button type="submit" class="btn btn-default bg-warning">
 				<i class="fa fa-edit"></i>Редактировать
 			    </button>

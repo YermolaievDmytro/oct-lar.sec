@@ -5,10 +5,9 @@
     <!-- Отображение ошибок проверки ввода -->
     @include('common.errors')
     <!-- Форма новой задачи -->
-    <form action="{{ route('tasks_update', $task->id) }}" method="POST" class="form-horizontal">
+    <form action="{{ route('tasks_update',$task->id)}}" method="POST" class="form-horizontal">
         {{csrf_field()}}
         {{method_field('patch')}}
-        <input type="hidden" name="id" value="{{$task['id']}}"/>
         <!-- Имя задачи -->
         <div class="form-group">
             <label for="task" class="col-sm-3 control-label">Задача</label>
